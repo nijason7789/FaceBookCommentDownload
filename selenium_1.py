@@ -93,8 +93,7 @@ if __name__ == '__main__':
     password = input('您的密碼:')
 
     #driver設定
-    driver_location = "C:\\Users\\Casval\\Desktop\\PythonExercise\\seleniumTest\\chromedriver.exe"
-    driver = webdriver.Chrome(driver_location)
+    driver = webdriver.Chrome()
     
     login(account, password, driver)
 
