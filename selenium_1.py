@@ -65,7 +65,7 @@ def crawl_comments(url, driver):
     all = [] #存放所有留言
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     comments = soup.find_all("div", class_="tw6a2znq sj5x9vvc d1544ag0 cxgpxx05")
-    print(len(comments))
+    print('一共擷取到',len(comments),'則留言，已成功生成：留言內容.csv')
     for comment in comments:
         dic = {}
         dic['name'] = comment.find('span', class_='pq6dq46d').text
