@@ -21,29 +21,40 @@ def crawl_comments(url, driver):
 
     #造訪網址
     driver.get(url)
-    time.sleep(1)
+    time.sleep(2)
 
-    #點選網頁消除通知
+    #點擊網頁消除 Popped up Notification 
     btn_0 = driver.find_element_by_css_selector('body')
     btn_0.click()
     time.sleep(1)
 
     #點選【x則留言】按鈕匯入留言資訊
-    btn_1 = driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div/div/div/div/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[2]/div/div[2]/div/div[2]')
-    driver.execute_script("arguments[0].click();", btn_1)
-    time.sleep(1)
+    while(True):
+        try:
+            btn_1 = driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div/div/div/div/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[2]/div/div[2]/div/div[2]')
+            driver.execute_script("arguments[0].click();", btn_1)
+            time.sleep(1)
+            break
+        except NoSuchElementException:
+            break
 
-    #點擊展開箭頭
-    btn_2 = driver.find_element_by_css_selector('div.rq0escxv.l9j0dhe7.du4w35lb.nc684nl6.g0qnabr5')
-    driver.execute_script("arguments[0].click();", btn_2)
-    #btn_2.click()
-    time.sleep(1)
+    #測試網站是否擁有展開箭頭
+    while(True):
+        try:
+            #點擊展開箭頭
+            btn_2 = driver.find_element_by_css_selector('div.rq0escxv.l9j0dhe7.du4w35lb.nc684nl6.g0qnabr5')
+            driver.execute_script("arguments[0].click();", btn_2)
+            #btn_2.click()
+            time.sleep(1)
 
-    #點擊最新留言
-    btn_3 = driver.find_elements_by_css_selector("div[role='menuitem']")[2]
-    driver.execute_script("arguments[0].click();", btn_3)
-    #btn_3.click()
-    time.sleep(1)
+            #點擊最新留言
+            btn_3 = driver.find_elements_by_css_selector("div[role='menuitem']")[2]
+            driver.execute_script("arguments[0].click();", btn_3)
+            #btn_3.click()
+            time.sleep(1)
+            break
+        except NoSuchElementException:
+            break
 
     #點擊更多留言
     while(True):
@@ -51,13 +62,15 @@ def crawl_comments(url, driver):
             btn_more = driver.find_element_by_css_selector('span.j83agx80.fv0vnmcu.hpfvmrgz')
             ActionChains(driver).move_to_element(btn_more).perform()
             driver.execute_script("arguments[0].click();", btn_more)
-            time.sleep(2)
+            time.sleep(1.5)
+            #span.j83agx80.a5y0qf1c.fv0vnmcu.ozuftl9m
         except StaleElementReferenceException: #element is not attached to the page document
             #define the web element once again
             btn_more = driver.find_element_by_css_selector('span.j83agx80.fv0vnmcu.hpfvmrgz')
             ActionChains(driver).move_to_element(btn_more).perform()
             driver.execute_script("arguments[0].click();", btn_more)
-            time.sleep(2)
+            time.sleep(1.5)
+            ##span.j83agx80.a5y0qf1c.fv0vnmcu.ozuftl9m
         except NoSuchElementException: #點完所有更多留言按鈕了
             break
     
@@ -89,8 +102,8 @@ if __name__ == '__main__':
     url = input('目標網址：')#
 
     #登入帳號
-    account = input('您的帳號:')
-    password = input('您的密碼:')
+    account = input('您的帳號：')
+    password = input('您的密碼：')
 
     #driver設定
     driver = webdriver.Chrome()
