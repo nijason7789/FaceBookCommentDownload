@@ -73,7 +73,18 @@ def crawl_comments(url, driver):
             ##span.j83agx80.a5y0qf1c.fv0vnmcu.ozuftl9m
         except NoSuchElementException: #點完所有更多留言按鈕了
             break
-    
+
+    #點選查看更多
+    while(True):
+        try:
+            btn_moreDetail = driver.find_element_by_xpath('//*[contains(text(),"查看更多")]')
+            driver.execute_script("arguments[0].click();", btn_moreDetail)
+            print('我點!')
+            time.sleep(1)
+        except NoSuchElementException:
+            print('沒有查看更多!')
+            break
+
     #將所有留言內容存起來
     all = [] #存放所有留言
     soup = BeautifulSoup(driver.page_source, 'html.parser')
